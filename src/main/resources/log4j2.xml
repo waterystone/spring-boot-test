@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="INFO">
     <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %p %c{1}:%L - %m%n</Pattern>
+            </PatternLayout>
+        </Console>
+
         <Console name="console-debug" target="SYSTEM_OUT">
             <PatternLayout>
                 <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %p %c{1}:%L - %m%n</Pattern>
@@ -36,17 +42,16 @@
     </Appenders>
 
     <Loggers>
-        <logger name="org.springframework" level="ERROR" additivity="false">
-            <appender-ref ref="console-info"/>
+        <logger name="org.springframework" level="INFO" additivity="false">
         </logger>
 
         <logger name="com.adu" level="DEBUG" additivity="false">
-            <appender-ref ref="console-debug"/>
+            <appender-ref ref="console"/>
             <appender-ref ref="rollingFile" />
         </logger>
 
         <root level="INFO" includeLocation="true">
-            <appender-ref ref="console-info" />
+            <appender-ref ref="console" />
             <appender-ref ref="rollingFile" />
         </root>
     </Loggers>
