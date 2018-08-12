@@ -42,11 +42,13 @@
     </Appenders>
 
     <Loggers>
-        <logger name="org.springframework" level="INFO" additivity="false">
-        </logger>
-
         <logger name="com.adu" level="DEBUG" additivity="false">
             <appender-ref ref="console"/>
+            <appender-ref ref="rollingFile" />
+        </logger>
+
+        <logger name="org.springframework" level="INFO" additivity="false">
+            <appender-ref ref="console-info" />
             <appender-ref ref="rollingFile" />
         </logger>
 
