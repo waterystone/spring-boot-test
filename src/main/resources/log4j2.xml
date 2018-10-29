@@ -7,33 +7,14 @@
             </PatternLayout>
         </Console>
 
-        <Console name="console-debug" target="SYSTEM_OUT">
-            <PatternLayout>
-                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %p %c{1}:%L - %m%n</Pattern>
-            </PatternLayout>
+        <RollingFile name="aduRollingFile" fileName="./logs/adu.log" filePattern="./logs/adu-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %p %c{1}:%L - %m%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
 
-            <Filters>
-                <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
-                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
-                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
-                <ThresholdFilter level="info" onMatch="DENY" onMismatch="NEUTRAL"/>
-            </Filters>
-        </Console>
-
-        <Console name="console-info" target="SYSTEM_OUT">
-            <PatternLayout>
-                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %p %c{1}:%L - %m%n</Pattern>
-            </PatternLayout>
-
-            <Filters>
-                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
-                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
-                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
-                <ThresholdFilter level="debug" onMatch="DENY" onMismatch="NEUTRAL"/>
-            </Filters>
-        </Console>
-
-        <RollingFile name="rollingFile" fileName="./logs/root.log" filePattern="./logs/root-%d{yyyy-MM-dd}.log">
+        <RollingFile name="rootRollingFile" fileName="./logs/root.log" filePattern="./logs/root-%d{yyyy-MM-dd}.log">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %p %c{1}:%L - %m%n" />
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
@@ -42,19 +23,13 @@
     </Appenders>
 
     <Loggers>
-        <logger name="com.adu" level="DEBUG" additivity="false">
-            <appender-ref ref="console"/>
-            <appender-ref ref="rollingFile" />
+        <logger name="com.adu" level="debug" additivity="false">
+            <AppenderRef ref="console" />
+            <AppenderRef ref="aduRollingFile" />
         </logger>
 
-        <logger name="org.springframework" level="INFO" additivity="false">
-            <appender-ref ref="console-info" />
-            <appender-ref ref="rollingFile" />
-        </logger>
-
-        <root level="INFO" includeLocation="true">
-            <appender-ref ref="console" />
-            <appender-ref ref="rollingFile" />
+        <root level="info">
+            <AppenderRef ref="rootRollingFile" />
         </root>
     </Loggers>
 </Configuration>
